@@ -1,2 +1,2 @@
-# apply-service-backend-MSA
-🖥️apply-service-backend-MSA🖥️
+# Springboot-Initializer
+spring boot 초기 코드
