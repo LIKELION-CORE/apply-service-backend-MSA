@@ -9,5 +9,6 @@ public interface AnswerDao {
     CommonResDto<AnswerResDto> updateAnswer(AnswerReqDto answerReqDto);
     CommonResDto<AnswerResDto> readAnswer(Long aid);
     CommonResDto<String> deleteAnswer(Long aid);
+    CommonResDto<?> readUserAnswerWithRid(Long rid, Long uid);
 
 }
