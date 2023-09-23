@@ -41,19 +41,19 @@ public class AnswerController {
     @PostMapping()
     public ResponseEntity<CommonResDto<AnswerResDto>> createAnswer(@RequestBody AnswerReqDto answerReqDto) {
 
-//        kafkaAnswerProducer.send("answer", answerReqDto);
-//        return null;
-        CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
-        Long uid = memberInfo.getData().getId();
-        answerReqDto.setUid(uid);
-        CommonResDto<AnswerResDto> commonResDto = answerService.createAnswer(answerReqDto);
+        AnswerResDto answer = kafkaAnswerProducer.send("answer", answerReqDto);
+//        CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
+//        Long uid = memberInfo.getData().getId();
+//        answerReqDto.setUid(uid);
+//        CommonResDto<AnswerResDto> commonResDto = answerService.createAnswer(answerReqDto);
 
 
-        if(commonResDto.getCode() == 1)
-            return ResponseEntity.status(HttpStatus.CREATED).body(commonResDto);
-
-        else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(commonResDto);
+//        if(commonResDto.getCode() == 1)
+//            return ResponseEntity.status(HttpStatus.CREATED).body(commonResDto);
+//
+//        else
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(commonResDto);
+        return null;
 
     }
     @PutMapping()

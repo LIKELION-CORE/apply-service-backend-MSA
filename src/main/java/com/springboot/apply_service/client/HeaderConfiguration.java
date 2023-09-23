@@ -12,25 +12,25 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Configuration
 public class HeaderConfiguration {
-//    JwtProvider jwtProvider;
-//    @Autowired
-//    public HeaderConfiguration(JwtProvider jwtProvider){
-//        this.jwtProvider = jwtProvider;
-//    }
+
     @Bean
     public RequestInterceptor requestInterceptor() {
         return template -> {
             RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 
-            if (requestAttributes != null) {
+            if (requestAttributes instanceof ServletRequestAttributes) {
                 HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
 
                 if (request != null) {
-                    JwtProvider jwtProvider = new JwtProvider();
-                    String token = jwtProvider.getToken(request);
-                    if (token != null) {
-                        //String token = (String) request.getSession().getAttribute(SessionUser.TOKEN_KEY);
+
+                    String token = request.getHeader("Authorization");
+                    System.out.println("apply-server token:"+token);
+                    if (token != null && token.startsWith("Bearer ")) {
+                        token = token.substring(7);
+                        System.out.println("apply-server subString token:"+token);
+
                         template.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
                     }
                 }
