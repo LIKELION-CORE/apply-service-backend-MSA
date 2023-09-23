@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AnswerQueryDslRepository {
-    List<Answer> finaAllAnswerByQidAndAid(Long rid, Long qid);
+    Optional<List<Answer>> finaAllAnswerByQidAndAid(Long rid, Long qid);
 }
