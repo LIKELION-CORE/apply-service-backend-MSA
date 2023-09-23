@@ -33,7 +33,7 @@ public class KafkaAnswerProducer {
             .type("struct")
             .fields(fields)
             .optional(false)
-            .name("orders")
+            .name("answer")
             .build();
 
     @Autowired

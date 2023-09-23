@@ -55,8 +55,6 @@ public class RecruitmentController {
     @PostMapping()
     public ResponseEntity<CommonResDto<RecruitmentDto>> createRecruitment(HttpServletRequest httpServletRequest,
                                                                           @RequestBody RecruitmentDto recruitmentDto) {
-
-        String token = jwtProvider.getToken(httpServletRequest);
         CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
         Long poster = memberInfo.getData().getId();
 
