@@ -35,14 +35,8 @@ class RecruitmentControllerTest {
     private MockMvc mockMvc;
     @MockBean
     RecruitmentServiceImpl recruitmentService;
-
     @MockBean
     UserServiceClient userServiceClient;
-//    @Autowired
-//    public RecruitmentControllerTest(MockMvc mockMvc, RecruitmentServiceImpl recruitmentService){
-//        this.mockMvc = mockMvc;
-//        this.recruitmentService = recruitmentService;
-//    }
 
     @Test
     @DisplayName("Get Recruitment List Test")
@@ -59,9 +53,8 @@ class RecruitmentControllerTest {
                         "title2",
                         "part2",
                         "job2",LocalDate.now(), LocalDate.now()));
-        //CommonResDto<List<RecruitmentListDto>> tmp = CommonResDto.builder().data(list).code(1).message("정상 적으로 조회되었습니다.").build();
+
         CommonResDto<List<RecruitmentListDto>> tmp = new CommonResDto<>(1, "정상적으로 조회되었습니다.", list);
-        //given(recruitmentService.readAllRecruitment()).willReturn(tmp).getMock();
         Mockito.when(recruitmentService.readAllRecruitment()).thenReturn(tmp);
 
         mockMvc.perform(
@@ -72,6 +65,7 @@ class RecruitmentControllerTest {
                 .andExpect(jsonPath("$.message").exists())
                 .andExpect(jsonPath("$.data").exists())
                 .andDo(print());
+        
         verify(recruitmentService).readAllRecruitment();
     }
 }
