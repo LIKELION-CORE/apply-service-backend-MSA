@@ -122,4 +122,9 @@ public class AnswerDaoImpl implements AnswerDao {
 
         return commonResDto;
     }
+
+    @Override
+    public CommonResDto<?> readUserAnswerWithRid(Long rid, Long uid) {
+        return null;
+    }
 }

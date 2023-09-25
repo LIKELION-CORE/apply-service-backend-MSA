@@ -30,6 +30,9 @@ public class Recruitment extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
+    //@Column(nullable = false)
+    private String job;
+
     @Column(nullable = false)
     private String part;
 

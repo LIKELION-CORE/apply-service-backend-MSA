@@ -3,14 +3,18 @@ package com.springboot.apply_service.domain.questions.dao.impl;
 import com.springboot.apply_service.domain.questions.dao.QuestionsDao;
 import com.springboot.apply_service.domain.questions.dto.QuestionsDto;
 import com.springboot.apply_service.domain.questions.entity.Questions;
+import com.springboot.apply_service.domain.questions.repository.QuestionsQueryDslRepository;
 import com.springboot.apply_service.domain.questions.repository.QuestionsRepository;
+import com.springboot.apply_service.domain.recruitment.dto.RecruitmentDto;
 import com.springboot.apply_service.domain.recruitment.entity.Recruitment;
 import com.springboot.apply_service.domain.recruitment.repository.RecruitmentRepository;
 import com.springboot.apply_service.global.common.CommonResDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -102,5 +106,26 @@ public class QuestionsDaoImpl implements QuestionsDao {
             commonResDto  = new CommonResDto<String>(-1, "데이터가 존재하지 않습니다.", null);
 
         return commonResDto;
+    }
+
+    @Override
+    public CommonResDto<?> readQuestionsWithRid(Long rid) {
+
+        Optional<Recruitment> savedRecruitment = recruitmentRepository.findById(rid);
+        CommonResDto<RecruitmentDto> commonResDto;
+        if(savedRecruitment.isPresent()){
+            Optional<List<Questions>> questions = questionsRepository.readQuestionsWithRid(savedRecruitment.get());
+            if(questions.isPresent()){
+
+            }
+//            RecruitmentDto selectedRecruitment = mapper.map(savedRecruitment.get(), RecruitmentDto.class);
+//            commonResDto
+//                    = new CommonResDto<RecruitmentDto>(1, "데이터가 조회되었습니다.", selectedRecruitment);
+        }
+        else
+            commonResDto
+                    = new CommonResDto<RecruitmentDto>(-1, "지원서 데이터가 존재하지 않습니다.", null);
+        return null;
+
     }
 }
