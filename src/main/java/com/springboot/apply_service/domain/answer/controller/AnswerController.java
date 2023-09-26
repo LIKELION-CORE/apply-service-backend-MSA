@@ -2,6 +2,7 @@ package com.springboot.apply_service.domain.answer.controller;
 
 import com.springboot.apply_service.client.UserServiceClient;
 import com.springboot.apply_service.client.dto.MemberInfoResponseDto;
+import com.springboot.apply_service.domain.answer.dto.AnswerListDto;
 import com.springboot.apply_service.domain.answer.dto.AnswerReqDto;
 import com.springboot.apply_service.domain.answer.dto.AnswerResDto;
 import com.springboot.apply_service.domain.answer.service.AnswerService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/answer")
@@ -45,6 +48,7 @@ public class AnswerController {
         CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
         Long uid = memberInfo.getData().getId();
         answerReqDto.setUid(uid);
+        answerReqDto.setStatue("ANSWER_TEMPTED");
         CommonResDto<AnswerResDto> commonResDto = answerService.createAnswer(answerReqDto);
 
 
@@ -68,6 +72,17 @@ public class AnswerController {
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commonResDto);
 
+    }
+    @GetMapping("/tempedAnswer")
+    public ResponseEntity<CommonResDto<List<AnswerListDto>>> readTempedAnswer(Long rid) {
+
+        CommonResDto<List<AnswerListDto>> commonResDto = answerService.readTempedAnswer(rid);
+
+        if(commonResDto.getCode() == 1)
+            return ResponseEntity.status(HttpStatus.OK).body(commonResDto);
+
+        else
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(commonResDto);
     }
     @DeleteMapping()
     public ResponseEntity<CommonResDto<String>> deleteAnswer(Long aid) throws Exception {

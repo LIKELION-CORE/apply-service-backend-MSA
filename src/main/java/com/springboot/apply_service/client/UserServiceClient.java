@@ -18,10 +18,10 @@ import java.util.List;
 public interface UserServiceClient {
 //    @PostMapping("/user-service/info")
 //    List<ResponseOrder> getOrders(@PathVariable String userId);
-    @PostMapping("/info")
+    @PostMapping("/api/v1/member/info")
     //@Headers("Content-Type: application/json")
     CommonResDto<MemberInfoResponseDto> getInfo();
-    @PostMapping("/memberInfo")
+    @PostMapping("/api/v1/member/memberInfo")
         //@Headers("Content-Type: application/json")
     MemberInfoResponseDto getMemberInfo();
 }
