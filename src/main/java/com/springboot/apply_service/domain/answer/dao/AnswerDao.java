@@ -14,5 +14,6 @@ public interface AnswerDao {
     CommonResDto<String> deleteAnswer(Long aid);
     CommonResDto<String> submitAnswers(Long rid, Long uid);
     CommonResDto<List<AnswerListDto>> readUserAnswerWithRid(Long rid, Long uid);
+    CommonResDto<?> submitAllAnswers(Long rid, Long uid);
 
 }

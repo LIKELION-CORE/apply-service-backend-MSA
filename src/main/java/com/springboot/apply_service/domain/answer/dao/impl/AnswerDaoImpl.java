@@ -152,4 +152,27 @@ public class AnswerDaoImpl implements AnswerDao {
         }
         return commonResDto;
     }
+
+    @Override
+    public CommonResDto<?> submitAllAnswers(Long rid, Long uid) {
+        Optional<List<Answer>> answerList = answerRepository.findAnswersByRidAndUid(rid, uid);
+        CommonResDto<List<AnswerListDto>> commonResDto;
+        if(answerList.isPresent()){
+            List<AnswerListDto> answers = new ArrayList<>();
+
+            for(Answer answer : answerList.get()){
+                //AnswerListDto tmp = mapper.map(answer, AnswerListDto.class);
+                answer.setStatue("ANSWER_SUBMITTED");
+
+                Answer tmp = answerRepository.save(answer);
+                answers.add(mapper.map(answer, AnswerListDto.class));
+            }
+
+            commonResDto = new CommonResDto<>(1, "답변이 정상적으로 저장되었습니다.", answers);
+
+        }else{
+            commonResDto = new CommonResDto<>(-1, "답변이 존재하지 않습니다.", null);
+        }
+        return commonResDto;
+    }
 }
