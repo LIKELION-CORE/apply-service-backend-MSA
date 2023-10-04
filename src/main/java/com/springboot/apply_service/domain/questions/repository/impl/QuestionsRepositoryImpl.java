@@ -14,7 +14,6 @@ public class QuestionsRepositoryImpl extends Querydsl4RepositorySupport implemen
     public QuestionsRepositoryImpl() {
         super(Questions.class);
     }
-
     @Override
     public Optional<List<Questions>> readQuestionsWithRid(Recruitment rid) {
         return Optional.ofNullable(select(questions).from(questions)

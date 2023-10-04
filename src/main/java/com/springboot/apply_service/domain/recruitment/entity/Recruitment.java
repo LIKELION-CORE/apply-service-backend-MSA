@@ -31,21 +31,24 @@ public class Recruitment extends BaseEntity {
     private String title;
 
     @Column(nullable = false)
+    private String job;
+
+    @Column(nullable = false)
     private String part;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=1000)
     private String activities;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=1000)
     private String competencies;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=1000)
     private String treatment;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=1000)
     private String introduction;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=1000)
     private String process;
 
     @Column(nullable = false)

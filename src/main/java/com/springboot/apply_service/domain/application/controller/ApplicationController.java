@@ -34,9 +34,9 @@ public class ApplicationController {
 
 //        kafkaAnswerProducer.send("answer", answerReqDto);
 //        return null;
-        CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
-        Long uid = memberInfo.getData().getId();
-        applicationDto.setUid(uid);
+//        CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
+//        Long uid = memberInfo.getData().getId();
+//        applicationDto.setUid(uid);
         CommonResDto<?> commonResDto = applicationService.createApplication(applicationDto);
 
         if(commonResDto.getCode() == 1)

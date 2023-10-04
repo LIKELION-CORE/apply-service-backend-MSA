@@ -1,6 +1,7 @@
 package com.springboot.apply_service.domain.answer.dao.impl;
 
 import com.springboot.apply_service.domain.answer.dao.AnswerDao;
+import com.springboot.apply_service.domain.answer.dto.AnswerListDto;
 import com.springboot.apply_service.domain.answer.dto.AnswerReqDto;
 import com.springboot.apply_service.domain.answer.dto.AnswerResDto;
 import com.springboot.apply_service.domain.answer.entity.Answer;
@@ -12,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -120,6 +123,56 @@ public class AnswerDaoImpl implements AnswerDao {
         else
             commonResDto  = new CommonResDto<String>(-1, "데이터가 존재하지 않습니다.", null);
 
+        return commonResDto;
+    }
+
+    @Override
+    public CommonResDto<String> submitAnswers(Long rid, Long uid) {
+        Optional<List<Answer>> answerList = answerRepository.findAnswersByRidAndUid(rid, uid);
+
+        return null;
+    }
+
+    @Override
+    public CommonResDto<List<AnswerListDto>> readUserAnswerWithRid(Long rid, Long uid) {
+        Optional<List<Answer>> answerList = answerRepository.findAnswersByRidAndUid(rid, uid);
+        CommonResDto<List<AnswerListDto>> commonResDto;
+        if(answerList.isPresent()){
+            List<AnswerListDto> answers = new ArrayList<>();
+
+            for(Answer answer : answerList.get()){
+                AnswerListDto tmp = mapper.map(answer, AnswerListDto.class);
+                answers.add(tmp);
+            }
+
+            commonResDto = new CommonResDto<>(1, "임시 저장된 데이터가 존재합니다.", answers);
+
+        }else{
+            commonResDto = new CommonResDto<>(-1, "임시 저장된 데이터가 존재하지 않습니다.", null);
+        }
+        return commonResDto;
+    }
+
+    @Override
+    public CommonResDto<?> submitAllAnswers(Long rid, Long uid) {
+        Optional<List<Answer>> answerList = answerRepository.findAnswersByRidAndUid(rid, uid);
+        CommonResDto<List<AnswerListDto>> commonResDto;
+        if(answerList.isPresent()){
+            List<AnswerListDto> answers = new ArrayList<>();
+
+            for(Answer answer : answerList.get()){
+                //AnswerListDto tmp = mapper.map(answer, AnswerListDto.class);
+                answer.setStatue("ANSWER_SUBMITTED");
+
+                Answer tmp = answerRepository.save(answer);
+                answers.add(mapper.map(answer, AnswerListDto.class));
+            }
+
+            commonResDto = new CommonResDto<>(1, "답변이 정상적으로 저장되었습니다.", answers);
+
+        }else{
+            commonResDto = new CommonResDto<>(-1, "답변이 존재하지 않습니다.", null);
+        }
         return commonResDto;
     }
 }
