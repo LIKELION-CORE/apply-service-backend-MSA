@@ -28,6 +28,6 @@ public class Answer extends BaseEntity {
     @Column(nullable = false)
     private String statue;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length=1000)
     private String content;
 }

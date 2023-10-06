@@ -3,9 +3,12 @@ package com.springboot.apply_service.domain.recruitment.service.impl;
 import com.springboot.apply_service.domain.recruitment.dao.RecruitmentDao;
 import com.springboot.apply_service.domain.recruitment.dto.RecruitmentDto;
 import com.springboot.apply_service.domain.recruitment.dto.RecruitmentInfoDto;
+import com.springboot.apply_service.domain.recruitment.dto.RecruitmentListDto;
 import com.springboot.apply_service.domain.recruitment.service.RecruitmentService;
 import com.springboot.apply_service.global.common.CommonResDto;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RecruitmentServiceImpl implements RecruitmentService {
@@ -40,5 +43,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     public CommonResDto<RecruitmentInfoDto> readRecruitmentInfo(Long rid) {
         return recruitmentDao.readRecruitmentInfo(rid);
+    }
+
+    @Override
+    public CommonResDto<List<RecruitmentListDto>> readAllRecruitment() {
+        return recruitmentDao.readAllRecruitment();
     }
 }

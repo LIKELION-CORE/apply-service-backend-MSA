@@ -20,14 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
-    private final JwtProvider jwtProvider;
+    //private final JwtProvider jwtProvider;
     private final UserServiceClient userServiceClient;
 
     @Autowired
     public RecruitmentController(RecruitmentService recruitmentService,
-                                 JwtProvider jwtProvider, UserServiceClient userServiceClient) {
+                                 /*JwtProvider jwtProvider,*/ UserServiceClient userServiceClient) {
         this.recruitmentService = recruitmentService;
-        this.jwtProvider = jwtProvider;
+        //this.jwtProvider = jwtProvider;
         this.userServiceClient = userServiceClient;
     }
     @GetMapping()
@@ -45,6 +45,18 @@ public class RecruitmentController {
     public ResponseEntity<CommonResDto<RecruitmentInfoDto>> readRecruitmentInfo(Long rid) {
 
         CommonResDto<RecruitmentInfoDto> commonResDto = recruitmentService.readRecruitmentInfo(rid);
+
+        if(commonResDto.getCode() == 1)
+            return ResponseEntity.status(HttpStatus.OK).body(commonResDto);
+
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commonResDto);
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<?> readAllRecruitment() {
+
+        CommonResDto<?> commonResDto = recruitmentService.readAllRecruitment();
 
         if(commonResDto.getCode() == 1)
             return ResponseEntity.status(HttpStatus.OK).body(commonResDto);

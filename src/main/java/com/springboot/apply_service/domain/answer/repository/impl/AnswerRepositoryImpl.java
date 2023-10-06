@@ -16,10 +16,17 @@ public class AnswerRepositoryImpl extends Querydsl4RepositorySupport implements 
     }
 
     @Override
-    public Optional<List<Answer>> finaAllAnswerByQidAndAid(Long rid, Long qid) {
+    public Optional<List<Answer>> findAllAnswerByQidAndAid(Long rid, Long qid) {
 
         return Optional.ofNullable(select(answer)
                 .from(answer)
                 .where(answer.rid.eq(rid).and(answer.qid.eq(qid))).fetch());
+    }
+
+    @Override
+    public Optional<List<Answer>> findAnswersByRidAndUid(Long rid, Long uid) {
+        return Optional.ofNullable(select(answer)
+                .from(answer)
+                .where(answer.rid.eq(rid).and(answer.uid.eq(uid))).fetch());
     }
 }

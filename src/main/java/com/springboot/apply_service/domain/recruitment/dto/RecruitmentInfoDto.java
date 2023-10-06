@@ -8,8 +8,10 @@ import java.util.List;
 
 @Data
 public class RecruitmentInfoDto {
+    private Long rid;
     private String title;
     private String part;
+    private String job;
     private String activities;
     private String competencies;
     private String treatment;

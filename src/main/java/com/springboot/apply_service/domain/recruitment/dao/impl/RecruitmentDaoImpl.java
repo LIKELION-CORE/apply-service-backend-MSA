@@ -5,6 +5,7 @@ import com.springboot.apply_service.domain.questions.entity.Questions;
 import com.springboot.apply_service.domain.recruitment.dao.RecruitmentDao;
 import com.springboot.apply_service.domain.recruitment.dto.RecruitmentDto;
 import com.springboot.apply_service.domain.recruitment.dto.RecruitmentInfoDto;
+import com.springboot.apply_service.domain.recruitment.dto.RecruitmentListDto;
 import com.springboot.apply_service.domain.recruitment.entity.Recruitment;
 import com.springboot.apply_service.domain.recruitment.repository.RecruitmentRepository;
 import com.springboot.apply_service.global.common.CommonResDto;
@@ -124,6 +125,25 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
                     "데이터가 존재하지 않습니다.",
                     null);
 
+        return commonResDto;
+    }
+
+    @Override
+    public CommonResDto<List<RecruitmentListDto>> readAllRecruitment() {
+        List<Recruitment> recruitments = recruitmentRepository.findAll();
+        List<RecruitmentListDto> resRecruitment = new ArrayList<>();
+        CommonResDto<List<RecruitmentListDto>> commonResDto;
+
+
+        if(recruitments.isEmpty()){
+            commonResDto = new CommonResDto<>(-1, "데이터가 존재하지 않습니다.", null);
+        }else {
+            for(Recruitment tmp : recruitments){
+                RecruitmentListDto recruitmentListDto = mapper.map(tmp, RecruitmentListDto.class);
+                resRecruitment.add(recruitmentListDto);
+            }
+            commonResDto = new CommonResDto<>(1, "데이터가 정상적으로 반환되었습니다.", resRecruitment);
+        }
         return commonResDto;
     }
 }
