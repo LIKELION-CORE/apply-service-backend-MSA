@@ -1,7 +1,17 @@
+
+## prod
 spring:
   cloud:
     config:
-      uri: http://127.0.0.1:8888
-      name: apply-service
+      uri: http://config-service-backend-msa-config-server-1:8888
+      name: apply-service # yml 파일명 써주면 된다.
   profiles:
-    active: dev
+    active: prod
+## dev
+#spring:
+#  cloud:
+#    config:
+#      uri: http://127.0.0.1:8888
+#      name: apply-service
+#  profiles:
+#    active: dev-minwoo
