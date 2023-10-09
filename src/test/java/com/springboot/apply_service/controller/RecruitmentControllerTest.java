@@ -68,4 +68,14 @@ class RecruitmentControllerTest {
         
         verify(recruitmentService).readAllRecruitment();
     }
+
+    //localhost:8000/apply-service/recruitment
+
+    //http://localhost:8000/apply-service/recruitment/getInfo?rid=11
+
+    //http://localhost:8000/apply-service/answer
+
+    //http://localhost:8000/apply-service/answer/tempedAnswer?rid=11
+
+    //http://localhost:8000/apply-service/application
 }
