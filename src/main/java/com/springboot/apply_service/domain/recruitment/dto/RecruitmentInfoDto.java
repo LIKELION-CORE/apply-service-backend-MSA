@@ -1,12 +1,14 @@
 package com.springboot.apply_service.domain.recruitment.dto;
 
 import com.springboot.apply_service.domain.questions.dto.QuestionInfoDto;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@Builder
 public class RecruitmentInfoDto {
     private Long rid;
     private String title;

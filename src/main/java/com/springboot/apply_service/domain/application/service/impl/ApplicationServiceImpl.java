@@ -27,8 +27,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public CommonResDto<?> createApplication(ApplicationDto applicationDto) {
-        CommonResDto<String> resDto;
+    public CommonResDto<ApplicationDto> createApplication(ApplicationDto applicationDto) {
+        CommonResDto<ApplicationDto> resDto;
 
         CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
         Long uid = memberInfo.getData().getId();
