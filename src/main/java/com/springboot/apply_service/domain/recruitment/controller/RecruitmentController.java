@@ -65,8 +65,7 @@ public class RecruitmentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commonResDto);
     }
     @PostMapping()
-    public ResponseEntity<CommonResDto<RecruitmentDto>> createRecruitment(HttpServletRequest httpServletRequest,
-                                                                          @RequestBody RecruitmentDto recruitmentDto) {
+    public ResponseEntity<CommonResDto<RecruitmentDto>> createRecruitment(@RequestBody RecruitmentDto recruitmentDto) {
         CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
         Long poster = memberInfo.getData().getId();
 
