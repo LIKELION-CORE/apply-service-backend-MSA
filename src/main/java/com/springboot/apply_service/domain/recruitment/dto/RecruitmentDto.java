@@ -1,11 +1,13 @@
 package com.springboot.apply_service.domain.recruitment.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Column;
 import java.time.LocalDate;
 
 @Data
+@Builder
 public class RecruitmentDto {
     private Long rid;
     private String title;

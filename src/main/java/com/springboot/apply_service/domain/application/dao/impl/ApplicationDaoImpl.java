@@ -29,9 +29,9 @@ public class ApplicationDaoImpl implements ApplicationDao {
     }
 
     @Override
-    public CommonResDto<?> createApplication(ApplicationDto applicationDto) {
+    public CommonResDto<ApplicationDto> createApplication(ApplicationDto applicationDto) {
         Optional<Recruitment> recruitment = recruitmentRepository.findById(applicationDto.getRid());
-        CommonResDto<?> commonResDto;
+        CommonResDto<ApplicationDto> commonResDto;
 
         if(recruitment.isPresent()){
             Application application = mapper.map(applicationDto, Application.class);
