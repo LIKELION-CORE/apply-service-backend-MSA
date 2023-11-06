@@ -1,5 +1,6 @@
 package com.springboot.apply_service.domain.recruitment.controller;
 
+import com.springboot.apply_service.VO.Greeting;
 import com.springboot.apply_service.client.UserServiceClient;
 import com.springboot.apply_service.client.dto.MemberInfoResponseDto;
 import com.springboot.apply_service.domain.auth.JwtProvider;
@@ -7,8 +8,10 @@ import com.springboot.apply_service.domain.recruitment.dto.RecruitmentDto;
 import com.springboot.apply_service.domain.recruitment.dto.RecruitmentInfoDto;
 import com.springboot.apply_service.domain.recruitment.service.RecruitmentService;
 import com.springboot.apply_service.global.common.CommonResDto;
+import io.micrometer.core.annotation.Timed;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +25,42 @@ public class RecruitmentController {
     private final RecruitmentService recruitmentService;
     //private final JwtProvider jwtProvider;
     private final UserServiceClient userServiceClient;
+    private Greeting greeting;
+    private Environment environment;
 
     @Autowired
     public RecruitmentController(RecruitmentService recruitmentService,
-                                 /*JwtProvider jwtProvider,*/ UserServiceClient userServiceClient) {
+                                 UserServiceClient userServiceClient,
+                                 Greeting greeting,
+                                 Environment environment) {
         this.recruitmentService = recruitmentService;
         //this.jwtProvider = jwtProvider;
         this.userServiceClient = userServiceClient;
+        this.greeting = greeting;
+        this.environment = environment;
     }
+
+    @GetMapping("/welcome")
+    @Timed(value="users.status", longTask = true)
+    public String status(){
+
+//        return String.format("It's Working in User Service on PORT %s"
+//                , env.getProperty("local.server.port"));
+
+        return String.format("It's Working in User Service"
+                + ", port(greeting.message)=" + environment.getProperty("greeting.message")
+//                + ", port(server.port)=" + environment.getProperty("server.port")
+//                + ", token secret=" + environment.getProperty("token.secret")
+//                + ", token expiration time=" + environment.getProperty("token.expiration_time")
+        );
+
+    }
+
+//    @GetMapping("/welcome")
+//    @Timed(value="users.welcome", longTask = true)
+//    public String welcome(){
+//        return greeting.getMessage();
+//    }
     @GetMapping()
     public ResponseEntity<CommonResDto<RecruitmentDto>> readRecruitment(Long rid) {
 
