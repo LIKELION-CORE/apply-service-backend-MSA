@@ -10,10 +10,7 @@ import com.springboot.apply_service.global.common.CommonResDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/application")
@@ -26,6 +23,12 @@ public class ApplicationController {
                                  UserServiceClient userServiceClient){
         this.applicationService = applicationService;
         this.userServiceClient = userServiceClient;
+    }
+
+    @GetMapping()
+    public ResponseEntity<CommonResDto<?>> getApplications(Long rid){
+        CommonResDto<?> commonResDto = applicationService.getApplicationByRid(rid);
+        return ResponseEntity.status(HttpStatus.OK).body(commonResDto);
     }
 
     @PostMapping()

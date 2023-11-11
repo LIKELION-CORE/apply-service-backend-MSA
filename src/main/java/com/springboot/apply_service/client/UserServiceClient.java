@@ -21,7 +21,7 @@ public interface UserServiceClient {
     @PostMapping("/api/v1/member/info")
     //@Headers("Content-Type: application/json")
     CommonResDto<MemberInfoResponseDto> getInfo();
-    @PostMapping("/api/v1/member/memberInfo")
+    @GetMapping("/api/v1/member")
         //@Headers("Content-Type: application/json")
-    MemberInfoResponseDto getMemberInfo();
+    CommonResDto<MemberInfoResponseDto> getMemberInfo();
 }
