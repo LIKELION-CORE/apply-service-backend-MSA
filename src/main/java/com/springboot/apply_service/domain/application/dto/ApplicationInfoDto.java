@@ -1,9 +1,12 @@
 package com.springboot.apply_service.domain.application.dto;
 
+import com.springboot.apply_service.domain.answer.dto.AnswerInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -22,4 +25,5 @@ public class ApplicationInfoDto {
     private String job;
     private String passState;
     private String mailState;
+    private List<AnswerInfoDto> answers;
 }

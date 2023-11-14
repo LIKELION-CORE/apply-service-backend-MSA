@@ -50,4 +50,18 @@ public class AnswerServiceImpl implements AnswerService {
 
         return answerDao.readUserAnswerWithRid(rid, memberInfo.getData().getId());
     }
+
+    @Override
+    public CommonResDto<String> createAnswerList(List<AnswerReqDto> answerListDtos) {
+        CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
+        Long uid = memberInfo.getData().getId();
+
+        for(AnswerReqDto answerReqDto : answerListDtos){
+            answerReqDto.setStatue("ANSWER_TEMPTED");
+            answerReqDto.setUid(uid);
+            answerDao.createAnswer(answerReqDto);
+        }
+
+        return new CommonResDto<>(1, "데이터가 정상적으로 임시저장 되었습니다.", null);
+    }
 }

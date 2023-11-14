@@ -4,6 +4,8 @@ import com.netflix.discovery.converters.Auto;
 import com.springboot.apply_service.client.UserServiceClient;
 import com.springboot.apply_service.client.dto.MemberInfoResponseDto;
 import com.springboot.apply_service.domain.answer.dao.AnswerDao;
+import com.springboot.apply_service.domain.answer.dto.AnswerInfoDto;
+import com.springboot.apply_service.domain.answer.dto.AnswerListDto;
 import com.springboot.apply_service.domain.application.dao.ApplicationDao;
 import com.springboot.apply_service.domain.application.dao.impl.ApplicationDaoImpl;
 import com.springboot.apply_service.domain.application.dto.ApplicationDto;
@@ -12,6 +14,7 @@ import com.springboot.apply_service.domain.application.dto.ApplicationUpdateMail
 import com.springboot.apply_service.domain.application.dto.ApplicationUpdatePassStateDto;
 import com.springboot.apply_service.domain.application.entity.Application;
 import com.springboot.apply_service.domain.application.service.ApplicationService;
+import com.springboot.apply_service.domain.questions.dao.QuestionsDao;
 import com.springboot.apply_service.domain.recruitment.entity.Recruitment;
 import com.springboot.apply_service.domain.recruitment.repository.RecruitmentRepository;
 import com.springboot.apply_service.global.common.CommonResDto;
@@ -28,17 +31,20 @@ public class ApplicationServiceImpl implements ApplicationService {
     final private UserServiceClient userServiceClient;
     final private AnswerDao answerDao;
     final private RecruitmentRepository recruitmentRepository;
+    final private QuestionsDao questionsDao;
     ModelMapper mapper = new ModelMapper();
 
     @Autowired
     public ApplicationServiceImpl(ApplicationDao applicationDao,
                                   UserServiceClient userServiceClient,
                                   AnswerDao answerDao,
-                                  RecruitmentRepository recruitmentRepository){
+                                  RecruitmentRepository recruitmentRepository,
+                                  QuestionsDao questionsDao){
         this.applicationDao = applicationDao;
         this.userServiceClient = userServiceClient;
         this.answerDao = answerDao;
         this.recruitmentRepository = recruitmentRepository;
+        this.questionsDao = questionsDao;
     }
 
     @Override
@@ -73,10 +79,25 @@ public class ApplicationServiceImpl implements ApplicationService {
         CommonResDto<ApplicationInfoDto> commonResDto;
         ApplicationDto applicationDto = applicationDao.getApplication(aid);
         Recruitment recruitment = recruitmentRepository.findById(applicationDto.getRid()).get();
+        CommonResDto<List<AnswerListDto>> answers
+                = answerDao.readUserAnswerWithRid(applicationDto.getRid(), applicationDto.getUid());
+        List<AnswerInfoDto> answerInfoDtos = new ArrayList<>();
+
+        for(AnswerListDto answerListDto : answers.getData()){
+            AnswerInfoDto tmp = new AnswerInfoDto();
+
+            tmp.setAid(answerListDto.getAid());
+            tmp.setQid(answerListDto.getQid());
+            tmp.setTitle(questionsDao.readQuestion(answerListDto.getQid()).getData().getTitle());
+            tmp.setContent(answerListDto.getContent());
+
+            answerInfoDtos.add(tmp);
+        }
 
         ApplicationInfoDto applicationInfoDto = mapper.map(applicationDto, ApplicationInfoDto.class);
         applicationInfoDto.setJob(recruitment.getJob());
         applicationInfoDto.setPart(recruitment.getPart());
+        applicationInfoDto.setAnswers(answerInfoDtos);
         //applicationDto.getUid() -> 이걸로 값 가지고 오기
         //memberinfo 추가
 

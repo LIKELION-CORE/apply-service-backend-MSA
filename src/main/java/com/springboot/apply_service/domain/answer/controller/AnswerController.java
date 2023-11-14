@@ -41,6 +41,10 @@ public class AnswerController {
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commonResDto);
     }
+    @PostMapping("/saveList")
+    public ResponseEntity<CommonResDto<String>> createAnswerList(@RequestBody List<AnswerReqDto> answer){
+        return ResponseEntity.status(HttpStatus.CREATED).body(answerService.createAnswerList(answer));
+    }
     @PostMapping()
     public ResponseEntity<CommonResDto<AnswerResDto>> createAnswer(@RequestBody AnswerReqDto answerReqDto) {
 

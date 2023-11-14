@@ -13,5 +13,4 @@ public class AnswerListDto {
     Long aid;
     Long qid;
     String content;
-
 }

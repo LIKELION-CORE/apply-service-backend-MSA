@@ -13,4 +13,5 @@ public interface AnswerService {
     CommonResDto<AnswerResDto> readAnswer(Long aid);
     CommonResDto<String> deleteAnswer(Long aid);
     CommonResDto<List<AnswerListDto>> readTempedAnswer(Long rid);
+    CommonResDto<String> createAnswerList(List<AnswerReqDto> answerListDtos);
 }
