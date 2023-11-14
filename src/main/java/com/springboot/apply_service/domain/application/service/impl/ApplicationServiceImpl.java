@@ -68,6 +68,24 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
+    public CommonResDto<ApplicationInfoDto> getApplication(Long aid) {
+
+        CommonResDto<ApplicationInfoDto> commonResDto;
+        ApplicationDto applicationDto = applicationDao.getApplication(aid);
+        Recruitment recruitment = recruitmentRepository.findById(applicationDto.getRid()).get();
+
+        ApplicationInfoDto applicationInfoDto = mapper.map(applicationDto, ApplicationInfoDto.class);
+        applicationInfoDto.setJob(recruitment.getJob());
+        applicationInfoDto.setPart(recruitment.getPart());
+        //applicationDto.getUid() -> 이걸로 값 가지고 오기
+        //memberinfo 추가
+
+        commonResDto = new CommonResDto<>(1, "데이터가 정상적으로 조회 되었습니다.", applicationInfoDto);
+
+        return commonResDto;
+    }
+
+    @Override
     public CommonResDto<List<ApplicationInfoDto>> getApplicationByRid(Long rid) {
         //CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getMemberInfo();
         //memberInfo.getData()

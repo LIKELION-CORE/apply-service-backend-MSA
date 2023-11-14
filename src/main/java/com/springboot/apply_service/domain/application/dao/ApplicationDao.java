@@ -1,6 +1,7 @@
 package com.springboot.apply_service.domain.application.dao;
 
 import com.springboot.apply_service.domain.application.dto.ApplicationDto;
+import com.springboot.apply_service.domain.application.dto.ApplicationInfoDto;
 import com.springboot.apply_service.domain.application.dto.ApplicationUpdateMailStateDto;
 import com.springboot.apply_service.domain.application.dto.ApplicationUpdatePassStateDto;
 import com.springboot.apply_service.global.common.CommonResDto;
@@ -12,4 +13,5 @@ public interface ApplicationDao {
     List<ApplicationDto> getApplicationByRid(Long rid);
     CommonResDto<String> updatePassState(ApplicationUpdatePassStateDto applicationUpdatePassStateDto);
     CommonResDto<String> updateEmailState(ApplicationUpdateMailStateDto applicationUpdateMailStateDto);
+    ApplicationDto getApplication(Long aid);
 }

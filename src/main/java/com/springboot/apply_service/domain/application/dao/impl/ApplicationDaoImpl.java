@@ -1,6 +1,5 @@
 package com.springboot.apply_service.domain.application.dao.impl;
 
-import com.netflix.discovery.converters.Auto;
 import com.springboot.apply_service.domain.application.dao.ApplicationDao;
 import com.springboot.apply_service.domain.application.dto.ApplicationDto;
 import com.springboot.apply_service.domain.application.dto.ApplicationUpdateMailStateDto;
@@ -91,5 +90,20 @@ public class ApplicationDaoImpl implements ApplicationDao {
             commonResDto = new CommonResDto<>(-1, "지원서가 존재하지 않습니다.", null);
         }
         return commonResDto;
+    }
+
+    @Override
+    public ApplicationDto getApplication(Long aid){
+        Optional<Application> application = applicationRepository.findById(aid);
+
+        if(application.isPresent()){
+            ApplicationDto applicationDto = mapper.map(application.get(), ApplicationDto.class);
+            return applicationDto;
+
+        }else{
+            return null;
+        }
+
+
     }
 }

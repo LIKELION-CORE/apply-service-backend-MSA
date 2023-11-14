@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ApplicationService {
     CommonResDto<ApplicationDto> createApplication(ApplicationDto applicationDto);
+    CommonResDto<ApplicationInfoDto> getApplication(Long aid);
     CommonResDto<List<ApplicationInfoDto>> getApplicationByRid(Long rid);
     CommonResDto<String> updateApplicationPassState(ApplicationUpdatePassStateDto applicationUpdatePassStateDto);
     CommonResDto<String> updateApplicationMailState(ApplicationUpdateMailStateDto applicationUpdateMailStateDto);
