@@ -95,6 +95,15 @@ public class RecruitmentController {
         else
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(commonResDto);
     }
+
+    @PostMapping("/save")
+    public ResponseEntity<CommonResDto<RecruitmentInfoDto>> createRecruitmentInfo(
+            @RequestBody RecruitmentInfoDto recruitmentInfoDto){
+        CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();
+        Long poster = memberInfo.getData().getId();
+            return ResponseEntity.status(HttpStatus.CREATED).
+                    body(recruitmentService.createRecruitmentWithQuestions(recruitmentInfoDto, poster));
+    }
     @PostMapping()
     public ResponseEntity<CommonResDto<RecruitmentDto>> createRecruitment(@RequestBody RecruitmentDto recruitmentDto) {
         CommonResDto<MemberInfoResponseDto> memberInfo = userServiceClient.getInfo();

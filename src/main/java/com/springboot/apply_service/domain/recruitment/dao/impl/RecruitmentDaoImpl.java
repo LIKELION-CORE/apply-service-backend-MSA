@@ -107,8 +107,7 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
             recruitmentInfoDto = mapper.map(recruitment, RecruitmentInfoDto.class);
 
             for(Questions question : recruitment.getQuestions()){
-                QuestionInfoDto buff = new QuestionInfoDto();
-                buff = mapper.map(question, QuestionInfoDto.class);
+                QuestionInfoDto buff = mapper.map(question, QuestionInfoDto.class);
                 questions.add(buff);
             }
 
@@ -145,5 +144,10 @@ public class RecruitmentDaoImpl implements RecruitmentDao {
             commonResDto = new CommonResDto<>(1, "데이터가 정상적으로 반환되었습니다.", resRecruitment);
         }
         return commonResDto;
+    }
+
+    @Override
+    public Recruitment createRecruitmentWithQuestions(Recruitment recruitment) {
+        return recruitmentRepository.save(recruitment);
     }
 }

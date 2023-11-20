@@ -15,4 +15,5 @@ public interface RecruitmentDao {
     CommonResDto<String> deleteRecruitment(Long rid);
     CommonResDto<RecruitmentInfoDto> readRecruitmentInfo(Long rid);
     CommonResDto<List<RecruitmentListDto>> readAllRecruitment();
+    Recruitment createRecruitmentWithQuestions(Recruitment recruitment);
 }
