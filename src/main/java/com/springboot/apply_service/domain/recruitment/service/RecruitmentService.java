@@ -14,4 +14,5 @@ public interface RecruitmentService {
     CommonResDto<String> deleteRecruitment(Long rid);
     CommonResDto<RecruitmentInfoDto> readRecruitmentInfo(Long rid);
     CommonResDto<List<RecruitmentListDto>> readAllRecruitment();
+    CommonResDto<RecruitmentInfoDto> createRecruitmentWithQuestions(RecruitmentInfoDto recruitmentInfoDto, Long poster);
 }
