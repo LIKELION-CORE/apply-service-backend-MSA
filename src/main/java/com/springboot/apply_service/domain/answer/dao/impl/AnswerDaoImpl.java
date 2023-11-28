@@ -5,6 +5,7 @@ import com.springboot.apply_service.domain.answer.dto.AnswerListDto;
 import com.springboot.apply_service.domain.answer.dto.AnswerReqDto;
 import com.springboot.apply_service.domain.answer.dto.AnswerResDto;
 import com.springboot.apply_service.domain.answer.entity.Answer;
+import com.springboot.apply_service.domain.answer.entity.QAnswer;
 import com.springboot.apply_service.domain.answer.repository.AnswerRepository;
 import com.springboot.apply_service.domain.questions.repository.QuestionsRepository;
 import com.springboot.apply_service.domain.recruitment.repository.RecruitmentRepository;
@@ -37,6 +38,16 @@ public class AnswerDaoImpl implements AnswerDao {
     public CommonResDto<AnswerResDto> createAnswer(AnswerReqDto questionsDto) {
 
         Answer answer = mapper.map(questionsDto, Answer.class);
+        //answerRepository.
+        //Optional<Answer> currentAnswer = answerRepository.findAnswersByRidAndUid(questionsDto.getRid(), questionsDto.getUid());
+        Optional<List<Answer>> currentAnswers = answerRepository.findAnswerByQidAndUid(
+                answer.getQid(), answer.getUid()
+        );
+        if(currentAnswers.isPresent() && !currentAnswers.get().isEmpty()){
+            //존재함
+            answer.setAid(currentAnswers
+                    .get().get(0).getAid());
+        }
         answer = answerRepository.save(answer);
 
         AnswerResDto answerResDto = new AnswerResDto();

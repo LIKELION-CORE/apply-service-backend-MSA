@@ -29,4 +29,11 @@ public class AnswerRepositoryImpl extends Querydsl4RepositorySupport implements 
                 .from(answer)
                 .where(answer.rid.eq(rid).and(answer.uid.eq(uid))).fetch());
     }
+
+    @Override
+    public Optional<List<Answer>> findAnswerByQidAndUid(Long qid, Long uid) {
+        return Optional.ofNullable(select(answer).
+                from(answer).where(answer.qid.eq(qid).and(answer.uid.eq(uid))).fetch()
+        );
+    }
 }
